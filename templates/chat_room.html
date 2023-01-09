@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="개발자 소통 게시판" />
+    <meta property="og:title" content="개발자 소통 게시판 회원가입" />
     <meta property="og:description" content="같이 소통하는 공간입니다. " />
     <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg" />
 
@@ -16,7 +16,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>개발자 소통게시판 및 채팅방</title>
+    <title>개발자 소통게시판 및 채팅방 회원가입</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -78,14 +78,15 @@
                 }
             })
         }
-        function save_comment() {
+        function save_sign() {
+            let nick_name = $('#nick_name').val()
             let name = $('#name').val()
-            let comment = $('#comment').val()
+            let password = $('#password').val()
 
             $.ajax({
                 type: "POST",
                 url: "/homework",
-                data: {'name_give':name, 'comment_give':comment},
+                data: {'nick_name_give':nick_name, 'name_give':name, 'password_give':password},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
@@ -121,38 +122,24 @@
 </head>
 <body>
     <div class="mypic">
-        <h1>개발자 소통게시판</h1>
+        <h1>개발자 소통게시판 회원가입</h1>
         <p>현재기온: <span id="temp">36</span>도</p>
+
     </div>
     <div class="mypost">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="nick_name" placeholder="url">
             <label for="floatingInput">닉네임</label>
         </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="password"
-                style="height: 100px"></textarea>
-            <label for="floatingTextarea2">비밀번호</label>
-        </div>
-        <button onclick="sign_in()" type="button" class="btn btn-dark">참여하기</button>
-        <button  type="button" class="btn btn-dark"><a href="signUp.html">회원가입</a></button>
-        <button type="button" class="btn btn_dark"><a href="chat_room.html">채팅방 가기</a></button>
-    </div>
-    </div>
-    <div class="mypost">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="url">
-            <label for="floatingInput">닉네임</label>
+            <input class="form-control" placeholder="Leave a comment here" id="name">
+            <label for="floatingTextarea2">이름</label>
         </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="text"
-                style="height: 100px"></textarea>
-            <label for="floatingTextarea2">게시글 쓰기</label>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="password" placeholder="url">
+            <label for="floatingInput">비밀번호</label>
         </div>
-        <button onclick="save_comment()" type="button" class="btn btn-dark">글 올리기</button>
-    </div>
-    <div class="mycards" id="comment-list">
-
+        <button onclick="save_sign()" type="button" class="btn btn-dark">회원가입하기</button>
     </div>
 </body>
 </html>
