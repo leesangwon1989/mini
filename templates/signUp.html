@@ -79,14 +79,14 @@
             })
         }
         function save_sign() {
-            let nick_name = $('#nick_name').val()
+            let id = $('#id').val()
             let name = $('#name').val()
             let password = $('#password').val()
 
             $.ajax({
                 type: "POST",
                 url: "/homework",
-                data: {'nick_name_give':nick_name, 'name_give':name, 'password_give':password},
+                data: {'id_give':id, 'name_give':name, 'password_give':password},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
