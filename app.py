@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@Cluster0.r0xf715.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
 
@@ -38,10 +38,20 @@ def signUpGet():
 def signIn():
     return render_template('signIn.html')
 
-@app.route('/signIn/check' ,methods = ["GET"])
+@app.route('/signIn/give', methods = ["POST"])
 def signInCheck():
-    signList =list(db.sign.find({}, {'_id': False}))
-    return jsonify({'signs':signList})
+    idReceive = request.form["idGive"]
+    passwordReceive = request.form["passwordGive"]
+    user = list(db.users.find({'id': idReceive, 'password': passwordReceive}, {'_id': False}))
+    if len(user):
+        doc = {
+            'userId' : user[0]['id'],
+            'userName' : user[0]['name']
+        }
+        return jsonify({'error': None, 'data':doc})
+    else:
+        return jsonify({'error': 'login-fail'})
+
 
 @app.route("/noticeBoard", methods=["POST"])
 def commentPost():
