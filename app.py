@@ -14,6 +14,14 @@ def home():
 def signUp():
     return render_template('signUp.html')
 
+@app.route('/signIn')
+def signIn():
+    return render_template('signIn.html')
+
+@app.route('/chatRoom')
+def chatRoom():
+    return render_template('chat_room.html')
+
 @app.route('/signUp/give', methods = ["POST"])
 def signUpPost():
     idReceive = request.form["idGive"]
@@ -33,10 +41,6 @@ def signUpPost():
 def signUpGet():
     userList = list (db.users.find({}, {'_id':False}))
     return jsonify({'users':userList})
-
-@app.route('/signIn')
-def signIn():
-    return render_template('signIn.html')
 
 @app.route('/signIn/check' ,methods = ["GET"])
 def signInCheck():
