@@ -84,7 +84,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/homework",
+                url: "/noticeBoard",
                 data: {'name_give':name, 'comment_give':comment},
                 success: function (response) {
                     alert(response["msg"])
@@ -126,20 +126,6 @@
     </div>
     <div class="mypost">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nick_name" placeholder="url">
-            <label for="floatingInput">닉네임</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="password"></textarea>
-            <label for="floatingTextarea2">비밀번호</label>
-        </div>
-        <button type="button" class="btn btn-dark"><a href="/signIn">참여하기</a></button>
-        <button type="button" class="btn btn-dark"><a href="/signUp">회원가입</a></button>
-        <button type="button" class="btn btn-dark"><a href="/chatRoom">채팅방 가기</a></button>
-    </div>
-    </div>
-    <div class="mypost">
-        <div class="form-floating mb-3">
             <input type="text" class="form-control" id="name" placeholder="url">
             <label for="floatingInput">닉네임</label>
         </div>
@@ -149,6 +135,9 @@
             <label for="floatingTextarea2">게시글 쓰기</label>
         </div>
         <button onclick="save_comment()" type="button" class="btn btn-dark">글 올리기</button>
+        <button type="button" class="btn btn-dark"><a href="/signIn">참여하기</a></button>
+        <button  type="button" class="btn btn-dark"><a href="/signUp">회원가입</a></button>
+        <button type="button" class="btn btn-dark"><a href="/chatRoom">채팅방 가기</a></button>
     </div>
     <div class="mycards" id="comment-list">
 

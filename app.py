@@ -57,7 +57,7 @@ def signInCheck():
         return jsonify({'error': 'login-fail'})
 
 
-@app.route("/noticeBoard", methods=["POST"])
+@app.route("/noticeBoard/post", methods=["POST"])
 def commentPost():
     commentReceive = request.form["commentGive"]
 
@@ -68,7 +68,7 @@ def commentPost():
     db.comment.insert_one(doc)
     return jsonify({'msg':'complete message up!'})
 
-@app.route("/noticeBoard", methods=["GET"])
+@app.route("/noticeBoard/get", methods=["GET"])
 def commentGet():
     commentList = list(db.comment.find({},{'_id':False}))
     return jsonify({'comments':commentList})
