@@ -66,7 +66,7 @@
     <script>
 		$(document).ready(function(){
             set_temp()
-            show_comment()
+
         });
         function set_temp(){
             $.ajax({
@@ -84,18 +84,21 @@
 
             $.ajax({
                 type: "POST",
-                url: "/signIn/give",
-                data: {'idGive':id , 'passwordGive':password},
+                url: '/signIn/give',
+                data: {'idGive':idGive , 'passwordGive':passwordGive},
                 success: function (response) {
-                    console.log()
-                    let rows = response["error"]
-                    if (rows == None) {
-                        localStorage.setItem(['userId', 'id'],["userName",'name']);
-                        alert("로그인 성공")
-                    } else {
-                        alert("로그인 실패")
-                    }
-                    window.location.reload()
+                let rows = response["error"]
+
+                if (rows == "") {
+                    let userId = response["data"]["userId"]
+                    let userName = response["data"]["userName"]
+                    localStorage.setItem(["userId", userId],["userName",userName]);
+                    alert("로그인 성공")
+                } else {
+                    alert("로그인 실패")
+                }
+                window.location.reload()
+
                 }
             });
         }
