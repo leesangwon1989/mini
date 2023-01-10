@@ -89,19 +89,19 @@
                 success: function (response) {
                 let rows = response["error"]
 
-                if (rows == "") {
-                    let userId = response["data"]["userId"]
-                    let userName = response["data"]["userName"]
+                if (error === null) {
+                    let userId = (response["data"]["userId"])
+                    let userName = (response["data"]["userName"])
                     localStorage.setItem(["userId", userId],["userName",userName]);
                     alert("로그인 성공")
                 } else {
                     alert("로그인 실패")
                 }
-                window.location.reload()
 
-                }
-            });
-        }
+
+            }
+        });
+    }
 
     </script>
 </head>
