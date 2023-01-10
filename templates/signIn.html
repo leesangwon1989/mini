@@ -5,24 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="개발자 소통 게시판 회원가입" />
-    <meta property="og:description" content="같이 소통하는 공간입니다. " />
-    <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg" />
+    <meta property="og:title" content="개발자 소통 게시판 회원가입"/>
+    <meta property="og:description" content="같이 소통하는 공간입니다. "/>
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg"/>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
     <title>개발자 소통게시판 및 채팅방 회원가입</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
     <style>
         * {
             font-family: 'Noto Serif KR', serif;
         }
+
         .mypic {
             width: 100%;
             height: 300px;
@@ -64,11 +66,12 @@
         }
     </style>
     <script>
-		$(document).ready(function(){
+        $(document).ready(function () {
             set_temp()
 
         });
-        function set_temp(){
+
+        function set_temp() {
             $.ajax({
                 type: "GET",
                 url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
@@ -78,6 +81,7 @@
                 }
             })
         }
+
         function saveSign() {
             let idGive = $('#id').val()
             let passwordGive = $('#password').val()
@@ -85,42 +89,41 @@
             $.ajax({
                 type: "POST",
                 url: '/signIn/give',
-                data: {'idGive':idGive , 'passwordGive':passwordGive},
+                data: {'idGive': idGive, 'passwordGive': passwordGive},
                 success: function (response) {
-                let error = response["error"]
+                    let error = response["error"]
 
-                if (error === null) {
-                    let userId = (response["data"]["userId"])
-                    let userName = (response["data"]["userName"])
-                    localStorage.setItem(["userId", userId],["userName",userName]);
-                    alert("로그인 성공")
-                } else {
-                    alert("로그인 실패")
+                    if (error === null) {
+                        let userId = (response["data"]["userId"])
+                        let userName = (response["data"]["userName"])
+                        localStorage.setItem(["userId", userId], ["userName", userName]);
+                        alert("로그인 성공")
+                    } else {
+                        alert("로그인 실패")
+                    }
+
+
                 }
-
-
-            }
-        });
-    }
+            });
+        }
 
     </script>
 </head>
 <body>
-    <div class="mypic">
-        <h1>개발자 소통게시판 회원가입</h1>
-        <p>현재기온: <span id="temp">36</span>도</p>
-
+<div class="mypic">
+    <h1>개발자 소통게시판 회원가입</h1>
+    <p>현재기온: <span id="temp">36</span>도</p>
+</div>
+<div class="mypost">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="id" placeholder="url" name="userid">
+        <label for="floatingInput">아이디</label>
     </div>
-    <div class="mypost">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="id" placeholder="url" name="userid">
-            <label for="floatingInput">아이디</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="password" placeholder="url" name="userpassword">
-            <label for="floatingInput">비밀번호</label>
-        </div>
-        <button onclick="saveSign()" type="button" class="btn btn-dark">로그인하기</button>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="password" placeholder="url" name="userpassword">
+        <label for="floatingInput">비밀번호</label>
     </div>
+    <button onclick="saveSign()" type="button" class="btn btn-dark">로그인하기</button>
+</div>
 </body>
 </html>
