@@ -43,7 +43,7 @@ def signUpGet():
     return jsonify({'users':userList})
 
 @app.route('/signIn/give', methods = ["POST"])
-def signInCheck():
+def signInGive():
     idReceive = request.form["idGive"]
     passwordReceive = request.form["passwordGive"]
     user = list(db.users.find({'id': idReceive, 'password': passwordReceive}, {'_id': False}))
