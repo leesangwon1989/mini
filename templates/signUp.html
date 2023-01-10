@@ -96,16 +96,18 @@
         function checkSign() {
             let id = $('#id').val()
 
-            $('#signList').empty()
+            $('#userList').empty()
             $.ajax({
                 type: "GET",
                 url: "/signUp/check",
                 data: {},
                 success: function (response) {
-                    let rows = response['signs']
+                    let rows = response['users']
                     for (let i = 0; i < rows.length; i++) {
-                        let id = rows[i]['id']
-                        if(id == id)
+                        let id01 = rows[i]['id']
+                        if(id == id01){
+                            alert("중복된 아이디 입니다. 다시 만들어 주세요")
+                        }
 
                     }
                 }
