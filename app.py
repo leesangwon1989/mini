@@ -32,7 +32,7 @@ def signUpPost():
 @app.route('/signUp/check', methods =["GET"])
 def signUpGet():
     signList = list (db.sign.find({}, {'_id':False}))
-    return jsonify({'sign':signList})
+    return jsonify({'signs':signList})
 
 @app.route('/signIn')
 def signIn():
@@ -41,7 +41,7 @@ def signIn():
 @app.route('/signIn/check' ,methods = ["GET"])
 def signInCheck():
     signList =list(db.sign.find({}, {'_id': False}))
-    return jsonify({'sign':signList})
+    return jsonify({'signs':signList})
 
 @app.route("/noticeBoard", methods=["POST"])
 def commentPost():

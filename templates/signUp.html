@@ -66,7 +66,7 @@
     <script>
 		$(document).ready(function(){
             set_temp()
-            show_comment()
+            checkSign()
         });
         function set_temp(){
             $.ajax({
@@ -85,35 +85,28 @@
 
             $.ajax({
                 type: "POST",
-                url: "/homework",
-                data: {'id_give':id, 'name_give':name, 'password_give':password},
+                url: "/signUp/give",
+                data: {'idGive':id, 'nameGive':name, 'passwordGive':password},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
                 }
             });
         }
-        function show_comment() {
-            $('#comment-list').empty()
+        function checkSign() {
+            let id = $('#id').val()
+
+            $('#signList').empty()
             $.ajax({
                 type: "GET",
-                url: "/homework",
+                url: "/signUp/check",
                 data: {},
                 success: function (response) {
-                    let rows = response['comments']
+                    let rows = response['signs']
                     for (let i = 0; i < rows.length; i++) {
-                        let name = rows[i]['name']
-                        let comment = rows[i]['comment']
+                        let id = rows[i]['id']
+                        if(id == id)
 
-                        let temp_html = `<div class="card">
-                                            <div class="card-body">
-                                                <blockquote class="blockquote mb-0">
-                                                    <p>${comment}</p>
-                                                    <footer class="blockquote-footer">${name}</footer>
-                                                </blockquote>
-                                            </div>
-                                        </div>`
-                        $('#comment-list').append(temp_html)
                     }
                 }
             });
@@ -130,6 +123,7 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="id" placeholder="url">
             <label for="floatingInput">아이디</label>
+             <button onclick="checkSign()" type="button" class="btn btn-dark">중복확인하기</button>
         </div>
         <div class="form-floating mb-3">
             <input class="form-control" placeholder="Leave a comment here" id="name">
