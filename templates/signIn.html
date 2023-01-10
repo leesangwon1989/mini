@@ -87,15 +87,15 @@
                 url: '/signIn/give',
                 data: {'idGive':idGive , 'passwordGive':passwordGive},
                 success: function (response) {
-                let error = response["error"]
+                let rows = response["error"]
 
-                if (error == "login-fail") {
-                    alert("로그인 실패")
-                } else {
+                if (error === null) {
                     let userId = (response["data"]["userId"])
                     let userName = (response["data"]["userName"])
                     localStorage.setItem(["userId", userId],["userName",userName]);
                     alert("로그인 성공")
+                } else {
+                    alert("로그인 실패")
                 }
 
 
