@@ -9,25 +9,48 @@ db = client.dbsparta
 @app.route('/')
 def home():
    return render_template('index.html')
-   return render_template('signUp.html')
-   return render_template('chat_room.html')
-   return render_template('signIn.html')
 
-@app.route("/noticeBoard/signUp", methods=["POST"])
-def homework_post():
-    nick_name_receive = request.form["nick_name_give"]
+@app.route('/signUp')
+def signUp():
+    return render_template('signUp.html')
+
+@app.route('/signUp/check', methods = ["POST"])
+def signUpPost():
+    id_receive = request.form["id_give"]
     name_receive = request.form["name_give"]
+    password_receive = request.form["password_give"]
+
+    doc = {
+        'id': id_receive,
+        'name': name_receive,
+        'password': password_receive
+    }
+
+    db.sign.insert_one(doc)
+    return jsonify({'msg': 'complete sign up!'})
+
+@app.route('/signIn')
+def signIn():
+    return render_template('signIn.html')
+
+@app.route('/signIn/check' ,methods = ["GET"])
+def signInCheck():
+    signList =list(db.sign.find({}, {'_id': False}))
+    return jsonify({'sign':signList})
+
+@app.route("/noticeBoard", methods=["POST"])
+def commentPost():
     comment_receive = request.form["comment_give"]
 
     doc = {
-        'id': name_receive,
+        'id': id_receive,
         'name': name_receive,
-        'comment': comment_receive,
+        'password': password_receive,
 
     }
 
     db.homework.insert_one(doc)
-    return jsonify({'msg':'응원 완료!'})
+    return jsonify({'msg':'complete sign up!'})
 
 @app.route("/noticeBoard", methods=["GET"])
 def homework_get():
