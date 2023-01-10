@@ -14,20 +14,25 @@ def home():
 def signUp():
     return render_template('signUp.html')
 
-@app.route('/signUp/check', methods = ["POST"])
+@app.route('/signUp/give', methods = ["POST"])
 def signUpPost():
-    id_receive = request.form["id_give"]
-    name_receive = request.form["name_give"]
-    password_receive = request.form["password_give"]
+    idReceive = request.form["idGive"]
+    nameReceive = request.form["nameGive"]
+    passwordReceive = request.form["passwordGive"]
 
     doc = {
-        'id': id_receive,
-        'name': name_receive,
-        'password': password_receive
+        'id': idReceive,
+        'name': nameReceive,
+        'password': passwordReceive
     }
 
     db.sign.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
+
+@app.route('/signUp/check', methods =["GET"])
+def signUpGet():
+    signList = list (db.sign.find({}, {'_id':False}))
+    return jsonify({'sign':signList})
 
 @app.route('/signIn')
 def signIn():
@@ -40,22 +45,19 @@ def signInCheck():
 
 @app.route("/noticeBoard", methods=["POST"])
 def commentPost():
-    comment_receive = request.form["comment_give"]
+    commentReceive = request.form["commentGive"]
 
     doc = {
-        'id': id_receive,
-        'name': name_receive,
-        'password': password_receive,
-
+        'comment': commentReceive
     }
 
-    db.homework.insert_one(doc)
-    return jsonify({'msg':'complete sign up!'})
+    db.comment.insert_one(doc)
+    return jsonify({'msg':'complete message up!'})
 
 @app.route("/noticeBoard", methods=["GET"])
-def homework_get():
-    comment_list = list(db.homework.find({},{'_id':False}))
-    return jsonify({'comments':comment_list})
+def commentGet():
+    commentList = list(db.comment.find({},{'_id':False}))
+    return jsonify({'comments':commentList})
 
 
 if __name__ == '__main__':
