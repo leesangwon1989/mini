@@ -90,8 +90,8 @@
                 let rows = response["error"]
 
                     if (rows == "") {
-                        let userId = response[1]["userId"]
-                        let userName = response[1]["userName"]
+                        let userId = response["data"]["userId"]
+                        let userName = response["data"]["userName"]
                         localStorage.setItem(["userId", userId],["userName",userName]);
                         alert("로그인 성공")
                     } else {
