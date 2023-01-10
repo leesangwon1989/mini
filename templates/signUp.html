@@ -64,6 +64,8 @@
         }
     </style>
     <script>
+        let checkUserId = false
+
 		$(document).ready(function(){
             set_temp()
         });
@@ -81,8 +83,10 @@
             let id = $('#id').val()
             let name = $('#name').val()
             let password = $('#password').val()
-
-            $.ajax({
+            if(checkUserId == false){
+                        alert("다시 아이디 중복 확인 해주세요")
+                    }else {
+                 $.ajax({
                 type: "POST",
                 url: "/signUp/give",
                 data: {'idGive':id, 'nameGive':name, 'passwordGive':password},
@@ -90,6 +94,7 @@
                     alert(response["msg"])
                 }
             });
+            }
         }
         function checkSign() {
             let id = $('#id').val()
@@ -115,6 +120,7 @@
                     }
                 }
             });
+            checkUserId = true
         }
     </script>
 </head>
