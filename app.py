@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@Cluster0.r0xf715.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 
@@ -13,6 +13,14 @@ def home():
 @app.route('/signUp')
 def signUp():
     return render_template('signUp.html')
+
+@app.route('/signIn')
+def signIn():
+    return render_template('signIn.html')
+
+@app.route('/chatRoom')
+def chatRoom():
+    return render_template('chat_room.html')
 
 @app.route('/signUp/give', methods = ["POST"])
 def signUpPost():
@@ -26,17 +34,13 @@ def signUpPost():
         'password': passwordReceive
     }
 
-    db.sign.insert_one(doc)
+    db.users.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
 
 @app.route('/signUp/check', methods =["GET"])
 def signUpGet():
-    signList = list (db.sign.find({}, {'_id':False}))
-    return jsonify({'signs':signList})
-
-@app.route('/signIn')
-def signIn():
-    return render_template('signIn.html')
+    userList = list (db.users.find({}, {'_id':False}))
+    return jsonify({'users':userList})
 
 @app.route('/signIn/give', methods = ["POST"])
 def signInCheck():
