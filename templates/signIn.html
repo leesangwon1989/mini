@@ -87,7 +87,7 @@
                 url: '/signIn/give',
                 data: {'idGive':idGive , 'passwordGive':passwordGive},
                 success: function (response) {
-                let rows = response["error"]
+                let error = response["error"]
 
                 if (error === null) {
                     let userId = (response["data"]["userId"])
