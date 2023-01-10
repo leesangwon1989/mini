@@ -39,7 +39,7 @@ def signUpPost():
 
 @app.route('/signUp/check', methods =["GET"])
 def signUpGet():
-    userList = list (db.users.find({}, {'_id':False}))
+    userList = list(db.users.find({}, {'_id':False}))
     return jsonify({'users':userList})
 
 @app.route('/signIn/give', methods = ["POST"])
