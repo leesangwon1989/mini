@@ -26,13 +26,13 @@ def signUpPost():
         'password': passwordReceive
     }
 
-    db.sign.insert_one(doc)
+    db.users.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
 
 @app.route('/signUp/check', methods =["GET"])
 def signUpGet():
-    signList = list (db.sign.find({}, {'_id':False}))
-    return jsonify({'signs':signList})
+    userList = list (db.users.find({}, {'_id':False}))
+    return jsonify({'users':userList})
 
 @app.route('/signIn')
 def signIn():
@@ -40,7 +40,7 @@ def signIn():
 
 @app.route('/signIn/check' ,methods = ["GET"])
 def signInCheck():
-    signList =list(db.sign.find({}, {'_id': False}))
+    signList =list(db.users.find({}, {'_id': False}))
     return jsonify({'signs':signList})
 
 @app.route("/noticeBoard", methods=["POST"])
