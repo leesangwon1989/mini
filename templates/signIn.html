@@ -85,11 +85,12 @@
             $.ajax({
                 type: "POST",
                 url: '/signIn/give',
-                data: {'idGive':id , 'passwordGive':password},
+                data: {'idGive':idGive , 'passwordGive':passwordGive},
                 success: function (response) {
                 let rows = response["error"]
-                    if (rows == null) {
-                        localStorage.setItem(['userId', 'id'],["userName",'name']);
+
+                    if (rows == "") {
+                        localStorage.setItem(['userId', userId],["userName",userName]);
                         alert("로그인 성공")
                     } else {
                         alert("로그인 실패")
