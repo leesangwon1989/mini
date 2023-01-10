@@ -87,9 +87,10 @@
                 url: "/signIn/give",
                 data: {'idGive':id , 'passwordGive':password},
                 success: function (response) {
+                    console.log()
                     let rows = response["error"]
                     if (rows == None) {
-                        localStorage.setItem(['userId', id],["userName",name]);
+                        localStorage.setItem(['userId', 'id'],["userName",'name']);
                         alert("로그인 성공")
                     } else {
                         alert("로그인 실패")
