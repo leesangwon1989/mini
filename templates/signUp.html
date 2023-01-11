@@ -83,22 +83,22 @@
             })
         }
 
-        function save_sign() {
+        function save_sign(value, dataName) {
             let id = $('#id').val()
             let name = $('#name').val()
             let password = $('#password').val()
+            let re_password = $('#re_password').val()
             if (checkUserId == false) {
-                alert("다시 아이디 중복 확인 해주세요")
-            } else {
+                alert("다시 아이디 중복 확인 해주세요");
+            } else
                 $.ajax({
                     type: "POST",
                     url: "/signUp/give",
-                    data: {'idGive': id, 'nameGive': name, 'passwordGive': password},
+                    data: {'idGive': id, 'nameGive': name, 'passwordGive': password , 're_passwordGive' : re_password},
                     success: function (response) {
                         alert(response["msg"])
                     }
                 });
-            }
         }
 
         function checkSign() {
@@ -127,30 +127,37 @@
             });
 
         }
+
     </script>
 </head>
 <body>
-<div class="mypic">
-    <h1>개발자 소통게시판 회원가입</h1>
-    <p>현재기온: <span id="temp">36</span>도</p>
+    <div class="mypic">
+        <h1>개발자 소통게시판 회원가입</h1>
+        <p>현재기온: <span id="temp">36</span>도</p>
 
-</div>
-<div class="mypost">
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="id" placeholder="url">
-        <label for="floatingInput">아이디</label>
-        <button onclick="checkSign()" type="button" class="btn btn-dark">중복확인하기</button>
     </div>
-    <div class="form-floating mb-3">
-        <input class="form-control" placeholder="Leave a comment here" id="name">
-        <label for="floatingTextarea2">이름</label>
+    <div class="mypost">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id" placeholder="url">
+            <label for="floatingInput">아이디</label>
+            <button onclick="checkSign()" type="button" class="btn btn-dark">중복확인하기</button>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" placeholder="Leave a comment here" id="name" >
+            <label for=" floatingTextarea2">닉네임</label>
+        </div>
+        <p style="font-size:1em; color:red;"> 비밀번호는 특수 문자 포함 6자 이상 입니다.</p>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="url" >
+            <label for="floatingInput">비밀번호</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="re_password" placeholder="url"
+                   >
+            <label for="floatingInput">비밀번호 확인</label>
+        </div>
+        <button onclick="save_sign()" type="button" class="btn btn-dark">회원가입하기</button>
+        <button type="button" class="btn btn-dark"><a href="/">원래 페이지로 돌아가기</a></button>
     </div>
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password" placeholder="url">
-        <label for="floatingInput">비밀번호</label>
-    </div>
-    <button onclick="save_sign()" type="button" class="btn btn-dark">회원가입하기</button>
-    <button type="button" class="btn btn-dark"><a href="/">원래 페이지로 돌아가기</a></button>
-</div>
 </body>
 </html>
