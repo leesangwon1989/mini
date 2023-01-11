@@ -5,6 +5,7 @@ import bcrypt
 
 app = Flask(__name__)
 
+
 client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
@@ -47,6 +48,12 @@ def signUpPost():
     idReceive = request.form["idGive"]
     nameReceive = request.form["nameGive"]
     passwordReceive = request.form["passwordGive"]
+    re_passwordReceive = request.form["re_passwordGive"]
+
+    if not (idReceive and nameReceive and passwordReceive and re_passwordReceive ):
+        return jsonify({'msg': '모두 입력해주세요!'})
+    elif passwordReceive != re_passwordReceive:
+        return jsonify({'msg': '비밀번호를 확인해주세요!'})
 
     hashedPassword = bcrypt.hashpw(passwordReceive.encode('utf-8'), bcrypt.gensalt())
     hashedPassword = hashedPassword.decode()
@@ -56,7 +63,6 @@ def signUpPost():
         'name': nameReceive,
         'password': hashedPassword
     }
-
     db.users.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
 
