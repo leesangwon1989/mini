@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
-httpRequest = request
 from flask_socketio import SocketIO, send
-from flask_cors import CORS
 import bcrypt
 
 app = Flask(__name__)
@@ -32,8 +30,7 @@ def chatRoom():
     return render_template('chat_room.html')
 
 @socketIo.on("message")
-def request(message):
-    print("message : " + message)
+def websocketRequest(message):
     to_client = dict()
     if message == 'new_connect':
         to_client['message'] = "새로운 유저가 난입하였다!!"
@@ -47,9 +44,9 @@ def request(message):
 
 @app.route('/signUp/give', methods=["POST"])
 def signUpPost():
-    idReceive = httpRequest.form["idGive"]
-    nameReceive = httpRequest.form["nameGive"]
-    passwordReceive = httpRequest.form["passwordGive"]
+    idReceive = request.form["idGive"]
+    nameReceive = request.form["nameGive"]
+    passwordReceive = request.form["passwordGive"]
 
     hashedPassword = bcrypt.hashpw(passwordReceive.encode('utf-8'), bcrypt.gensalt())
     hashedPassword = hashedPassword.decode()
@@ -72,9 +69,8 @@ def signUpGet():
 
 @app.route('/signIn/give', methods=["POST"])
 def signInGive():
-    print(httpRequest, type(httpRequest))
-    idReceive = httpRequest.form["idGive"]
-    passwordReceive = httpRequest.form["passwordGive"]
+    idReceive = request.form["idGive"]
+    passwordReceive = request.form["passwordGive"]
 
     user = list(db.users.find({'id': idReceive}, {'_id': False}))
     if len(user) > 0 and bcrypt.checkpw(passwordReceive.encode('utf-8'), user[0]['password'].encode('utf-8')):
@@ -89,8 +85,8 @@ def signInGive():
 # //comment 관리
 @app.route("/noticeBoard/post", methods=["POST"])
 def commentPost():
-    commentReceive = httpRequest.form["commentGive"]
-    nameReceive = httpRequest.form["nameGive"]
+    commentReceive = request.form["commentGive"]
+    nameReceive = request.form["nameGive"]
     doc = {
         'comment' : commentReceive,
         'name' : nameReceive
