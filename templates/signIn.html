@@ -96,7 +96,8 @@
                     if (error === null) {
                         let userId = (response["data"]["userId"])
                         let userName = (response["data"]["userName"])
-                        localStorage.setItem(["userId", userId], ["userName", userName]);
+                        localStorage.setItem("userId", userId);
+                        localStorage.setItem("userName", userName);
                         alert("로그인 성공")
                     } else {
                         alert("로그인 실패")
