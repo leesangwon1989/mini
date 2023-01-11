@@ -84,9 +84,9 @@
             socket.on('message', function (msg) {
                 //console.log(type(msg));
                 if (msg.type === 'normal') {
-                    $('#message').append('>>' + msg.message + '<br>')
+                    $('#messages').append('>>' + msg.message + '<br>')
                 } else {
-                    $('#message').append('<li>' + msg.message + '</li>')
+                    $('#messages').append('<li>' + msg.message + '</li>')
                 }
                 console.log('Received Message:' + msg.type)
             })
