@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, jsonify
+from pymongo import MongoClient
+from flask_socketio import SocketIO, send
+import bcrypt
 
 app = Flask(__name__)
-
-from pymongo import MongoClient
-import bcrypt
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
+socketIo = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
 def home():
@@ -27,6 +28,18 @@ def signIn():
 @app.route('/chatRoom')
 def chatRoom():
     return render_template('chat_room.html')
+
+@socketIo.on("message")
+def websocketRequest(message):
+    to_client = dict()
+    if message == 'new_connect':
+        to_client['message'] = "새로운 유저가 난입하였다!!"
+        to_client['type'] = 'connect'
+    else:
+        to_client['message'] = message
+        to_client['type'] = 'normal'
+    # emit("response", {'data': message['data'], 'username': session['username']}, broadcast=True)
+    send(to_client, broadcast=True)
 
 
 @app.route('/signUp/give', methods=["POST"])
