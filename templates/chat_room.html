@@ -5,24 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="개발자 소통 게시판 회원가입" />
-    <meta property="og:description" content="같이 소통하는 공간입니다. " />
-    <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg" />
+    <meta property="og:title" content="개발자 소통 게시판 회원가입"/>
+    <meta property="og:description" content="같이 소통하는 공간입니다. "/>
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg"/>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
     <title>개발자 소통게시판 및 채팅방 회원가입</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
     <style>
         * {
             font-family: 'Noto Serif KR', serif;
         }
+
         .mypic {
             width: 100%;
             height: 300px;
@@ -64,11 +66,37 @@
         }
     </style>
     <script>
-		$(document).ready(function(){
+        let name = localStorage.getItem('userId')
+        $(document).ready(function () {
             set_temp()
-            show_comment()
+            var socket = io.connect('http://127.0.0.1:5000')
+            socket.on('connect', function () {
+                var connectString = 'new_connect'
+                socket.send(connectString)
+            })
+
+            socket.on('hello', function () {
+                $('#messages').append('<li>' + '>>Hello' + msg + '<li>')
+                console.log('Received Hello message')
+            })
+
+            socket.on('message', function (msg) {
+                //console.log(type(msg));
+                if (msg.type === 'normal') {
+                    $('#message').append(name + '<br>' + '>>' + msg.message + '<br>')
+                } else {
+                    $('#message').append('<li>' + msg.message + '</li>')
+                }
+                console.log('Received Message:' + msg.type)
+            })
+
+            $('#sendbutton').on('click', function () {
+                socket.send($('#myMessage').val())
+                $('#myMessage').val('')
+            })
         });
-        function set_temp(){
+
+        function set_temp() {
             $.ajax({
                 type: "GET",
                 url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
@@ -78,64 +106,26 @@
                 }
             })
         }
-        function save_sign() {
-            let nick_name = $('#nick_name').val()
-            let name = $('#name').val()
-            let password = $('#password').val()
 
-            $.ajax({
-                type: "POST",
-                url: "/homework",
-                data: {'nick_name_give':nick_name, 'name_give':name, 'password_give':password},
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.reload()
-                }
-            });
-        }
-        function show_comment() {
-            $('#comment-list').empty()
-            $.ajax({
-                type: "GET",
-                url: "/homework",
-                data: {},
-                success: function (response) {
-                    let rows = response['comments']
-                    for (let i = 0; i < rows.length; i++) {
-                        let name = rows[i]['name']
-                        let comment = rows[i]['comment']
-
-                        let temp_html = `<div class="card">
-                                            <div class="card-body">
-                                                <blockquote class="blockquote mb-0">
-                                                    <p>${comment}</p>
-                                                    <footer class="blockquote-footer">${name}</footer>
-                                                </blockquote>
-                                            </div>
-                                        </div>`
-                        $('#comment-list').append(temp_html)
-                    }
-                }
-            });
         }
     </script>
 </head>
 <body>
-    <div class="mypic">
-        <h1>개발자 채팅방</h1>
-        <p>현재기온: <span id="temp">36</span>도</p>
+<div class="mypic">
+    <h1>개발자 채팅방</h1>
+    <p>현재기온: <span id="temp">36</span>도</p>
 
+</div>
+<div class="mypost">
+    <div>
+        <ul id="messages" class="form-control" style="height: 500px"></ul>
     </div>
-    <div class="mypost">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nick_name" placeholder="url">
-            <label for="floatingInput">닉네임</label>
-        </div>
-        <div class="form-floating mb-3">
-          <textarea type="text" class="form-control" id="text" placeholder="url" style="height: 100px"></textarea>
+            <textarea type="text" class="form-control" id="myMessage" placeholder="url"
+                      style="height: 100px"></textarea>
             <label for="floatingInput">채팅 내용</label>
         </div>
-        <button onclick="save_sign()" type="button" class="btn btn-dark">보내기</button>
+        <button id="sendbutton" type="button" class="btn btn-dark">보내기</button>
     </div>
 </body>
 </html>
