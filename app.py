@@ -77,7 +77,7 @@ def commentPost():
     }
     db.comment.insert_one(doc)
     return jsonify({'msg': 'complete message up!'})
-
+# aaaa
 
 @app.route("/noticeBoard/get", methods=["GET"])
 def commentGet():
