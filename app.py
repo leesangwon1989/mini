@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
 # from pymongo import MongoClient
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.a1shctu.mongodb.net/Cluster0?retryWrites=true&w=majority')
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
 # db = client.dbsparta
+from pymongo import MongoClient
+client = MongoClient('mongodb+srv://test:sparta@cluster0.a1shctu.mongodb.net/Cluster0?retryWrites=true&w=majority')
+db = client.dbsparta
 
 
 @app.route('/')
@@ -35,13 +35,18 @@ def signUpPost():
     idReceive = request.form["idGive"]
     nameReceive = request.form["nameGive"]
     passwordReceive = request.form["passwordGive"]
+    re_passwordReceive = request.form["re_passwordGive"]
 
-    doc = {
+    if not (idReceive and nameReceive and passwordReceive and re_passwordReceive ):
+        return jsonify({'msg': '모두 입력해주세요!'})
+    elif passwordReceive != re_passwordReceive:
+        return jsonify({'msg': '비밀번호를 확인해주세요!'})
+     else:
+     doc = {
         'id': idReceive,
         'name': nameReceive,
         'password': passwordReceive
     }
-
     db.users.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
 
