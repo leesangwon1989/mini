@@ -66,7 +66,7 @@ def signInGive():
     else:
         return jsonify({'error': 'login-fail'})
 
-
+# //comment 관리
 @app.route("/noticeBoard/post", methods=["POST"])
 def commentPost():
     commentReceive = request.form["commentGive"]
