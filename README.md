@@ -26,7 +26,7 @@
         이상원
     </td>
     <td>
-        000
+        FRONT-END / BACK-END
     </td>
 </tr>
 <tr>
@@ -34,7 +34,7 @@
         임민성
     </td>
     <td>
-        000
+        FRONT-END / BACK-END
     </td>
 </tr>
 <tr>
@@ -42,15 +42,15 @@
         오영석
     </td>
     <td>
-        000
+       FRONT-END / BACK-END
     </td>
 </tr>
 <tr>
     <td>
-        이상원
+       이도경 
     </td>
     <td>
-        000
+        FRONT-END / BACK-END
     </td>
 </tr>
 </tbody>
