@@ -1,17 +1,16 @@
 from flask import Flask, render_template, request, jsonify
-
-app = Flask(__name__)
-
 from pymongo import MongoClient
 httpRequest = request
 from flask_socketio import SocketIO, send
-
+from flask_cors import CORS
 import bcrypt
+
+app = Flask(__name__)
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
-socketIo = SocketIO(app)
+socketIo = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
 def home():
