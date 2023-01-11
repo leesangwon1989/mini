@@ -99,10 +99,18 @@
                     for (let i = 0; i < rows.length; i++) {
                         let name = rows[i]['name']
                         let comment = rows[i]['comment']
-                        let temp_html = `<tr>
-                                            <td>${name}</td>
-                                            <td>${comment}</td>
-                                        </tr>`
+                        let temp_html = `<div class="mycards" id="comment-list">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>${name}</td>
+                                                        <td>${comment}</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="comment-box">
+                                                    </tbody>
+                                                </table>
+                                            </div>`
                         $('#comment-box').append(temp_html)
                     }
                 }
