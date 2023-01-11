@@ -64,6 +64,14 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        a{
+            text-decoration-line: none;
+        }
+
+        button {
+            align-
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -131,12 +139,10 @@
                       style="height: 100px"></textarea>
         <label for="floatingTextarea2">게시글 쓰기</label>
     </div>
-    <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;" >
         <button onclick="save_comment()" type="button" class="btn btn-dark">글 올리기</button>
-        <button type="button" class="btn btn-dark"><a href="/signIn">참여하기</a></button>
-        <button type="button" class="btn btn-dark"><a href="/signUp">회원가입</a></button>
-        <button type="button" class="btn btn-dark"><a href="/chatRoom">채팅방 가기</a></button>
-    </div>
+        <button type="button" class="btn btn-dark"><a href="/signIn" style="color: white">참여하기</a></button>
+        <button type="button" class="btn btn-dark"><a href="/signUp" style="color: white">회원가입</a></button>
+        <button type="button" class="btn btn-dark"><a href="/chatRoom" style="color: white">채팅방 가기</a></button>
 </div>
 <div class="mycards" id="comment-list">
     <table class="table">
