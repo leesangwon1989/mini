@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify ,redirect
 from pymongo import MongoClient
 from flask_socketio import SocketIO, send
+from werkzeug.security import generate_password_hash, check_password_hash
 import bcrypt
 
 app = Flask(__name__)
@@ -50,10 +51,15 @@ def signUpPost():
     passwordReceive = request.form["passwordGive"]
     re_passwordReceive = request.form["re_passwordGive"]
 
+
     if not (idReceive and nameReceive and passwordReceive and re_passwordReceive ):
         return jsonify({'msg': '모두 입력해주세요!'})
     elif passwordReceive != re_passwordReceive:
         return jsonify({'msg': '비밀번호를 확인해주세요!'})
+    elif len(nameReceive) < 2:
+        return jsonify({'msg': '닉네임은 2자 이상입니다.'})
+    elif len(passwordReceive) < 4:
+        return jsonify({'msg': '비밀번호는 4자 이상입니다.'})
 
     hashedPassword = bcrypt.hashpw(passwordReceive.encode('utf-8'), bcrypt.gensalt())
     hashedPassword = hashedPassword.decode()
@@ -65,6 +71,8 @@ def signUpPost():
     }
     db.users.insert_one(doc)
     return jsonify({'msg': 'complete sign up!'})
+    return redirect(url_for('/'))
+
 
 
 @app.route('/signUp/check', methods=["GET"])
