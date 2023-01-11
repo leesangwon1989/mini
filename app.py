@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+# from pymongo import MongoClient
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
+# db = client.dbsparta
 from pymongo import MongoClient
-
-client = MongoClient('mongodb+srv://test:sparta@cluster0.rvhpcnz.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.a1shctu.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
 
@@ -68,19 +70,20 @@ def signInGive():
 @app.route("/noticeBoard/post", methods=["POST"])
 def commentPost():
     commentReceive = request.form["commentGive"]
-
+    nameReceive = request.form["nameGive"]
     doc = {
-        'comment': commentReceive
+        'comment' : commentReceive,
+        'name' : nameReceive
     }
-
     db.comment.insert_one(doc)
     return jsonify({'msg': 'complete message up!'})
 
 
 @app.route("/noticeBoard/get", methods=["GET"])
 def commentGet():
+    # commentList = list(db.comment.find({}, {'_id': False}))
     commentList = list(db.comment.find({}, {'_id': False}))
-    return jsonify({'comments': commentList})
+    return jsonify({'comment':commentList})
 
 
 if __name__ == '__main__':
