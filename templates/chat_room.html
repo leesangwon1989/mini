@@ -68,6 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
     <script type="text/javascript">
+        {#let name = localStorage.getItem('userId')#}
+
         $(document).ready(function () {
             set_temp()
             var socket = io.connect('http://127.0.0.1:5000')
@@ -120,6 +122,10 @@
     <div>
         <ul id="messages" class="form-control" style="height: 500px"></ul>
     </div>
+{#        <div class="form-floating mb-3">#}
+{#           <textarea type="text" class="form-control" id="nickName" placeholder="url"></textarea>#}
+{#            <label for="floatingInput">닉네임</label>#}
+{#        </div>#}
         <div class="form-floating mb-3">
             <textarea type="text" class="form-control" id="myMessage" placeholder="url"
                       style="height: 100px"></textarea>
