@@ -48,12 +48,6 @@ def signUpPost():
     idReceive = request.form["idGive"]
     nameReceive = request.form["nameGive"]
     passwordReceive = request.form["passwordGive"]
-    re_passwordReceive = request.form["re_passwordGive"]
-
-    if not (idReceive and nameReceive and passwordReceive and re_passwordReceive ):
-        return jsonify({'msg': '모두 입력해주세요!'})
-    elif passwordReceive != re_passwordReceive:
-        return jsonify({'msg': '비밀번호를 확인해주세요!'})
 
     hashedPassword = bcrypt.hashpw(passwordReceive.encode('utf-8'), bcrypt.gensalt())
     hashedPassword = hashedPassword.decode()
