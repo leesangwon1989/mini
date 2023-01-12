@@ -88,15 +88,53 @@
             let name = $('#name').val()
             let password = $('#password').val()
             let re_password = $('#re_password').val()
+            var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식
+            var n_RegExp = /^[가-힣]{1,15}$/; //이름 유효성검사 정규식
+
+            if (id == '') {
+                alert("ID를 입력해주세요.");
+                return false;
+            }
+            if (!RegExp.test(id)) { //아이디 유효성검사
+                alert("ID는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+                return false;
+            }
             if (checkUserId == false) {
                 alert("다시 아이디 중복 확인 해주세요");
-            } else
+            }
+            if (name == '') {
+                alert("이름을 입력해주세요.");
+                return false;
+            }
+            if (!n_RegExp.test(name)) {
+                alert("특수문자,영어,숫자는 사용할수 없습니다. 한글만 입력하여주세요.");
+                return false;
+            }
+            if (password == '') { // 비밀번호 입력여부 검사
+                alert("Password를 입력해주세요.");
+                return false;
+            }
+            if (!RegExp.test(password)) { //패스워드 유효성검사
+                alert("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+                return false;
+            }
+            if (password == id) { //패스워드와 ID가 동일한지 검사
+                alert("Password는 ID와 동일하면 안됩니다.");
+                return false;
+            }
+
+            if (re_password != password) { //비밀번호와 비밀번호확인이 동일한지 검사
+                alert("비밀번호가 틀립니다. 다시 확인하여 입력해주세요.");
+                return false;
+            }
+            else
                 $.ajax({
                     type: "POST",
                     url: "/signUp/give",
-                    data: {'idGive': id, 'nameGive': name, 'passwordGive': password , 're_passwordGive' : re_password},
+                    data: {'idGive': id, 'nameGive': name, 'passwordGive': password, 're_passwordGive': re_password},
                     success: function (response) {
                         alert(response["msg"])
+                        window.location.replace('/')
                     }
                 });
         }
